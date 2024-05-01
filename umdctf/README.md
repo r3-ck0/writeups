@@ -1,7 +1,7 @@
 # Info
 
 This was a very fun CTF I played with the World Wide Flags team. We came in 9th. Thanks to n0s for the sleepless night solving 
-stupid Erlang challenges!
+stupid Erlang challenges! (9/562 = 1.6%)
 
 ## Writeups
 
