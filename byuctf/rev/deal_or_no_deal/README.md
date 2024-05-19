@@ -67,6 +67,10 @@ logger.info(f"Result: {ipt_to_str(ipt)}")
 
 So we ran this and get a flag! `byuctf{y0u_rust!}`. But when we try to plug that flag in, it doesn't accept it. HEY!
 But we don't give up now. So we look more closely at what the code says and get to `byuctf{y0u_`, with `no = 2`. From here,
-we can either go to `byuctf{y0u_c` or `byuctf{y0u_r`. Knowing this, we are a bit more careful at following the code and only plug in what we expect to be correct (Okay, at this point the script is useless and we could have just written it down in a text-editor, but I didn't have time to code a full-fledged text-editor!)
+we can either go to `byuctf{y0u_c` or `byuctf{y0u_r` as seen below.
+
+![corr](corr.png)
+
+Knowing this, we are a bit more careful at following the code and only plug in what we expect to be correct (Okay, at this point the script is useless and we could have just written it down in a text-editor, but I didn't have time to code a full-fledged text-editor!)
 
 So we follow the code, get the `million_dollar()` and with it, the flag to win the challenge.
