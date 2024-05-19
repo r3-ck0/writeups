@@ -1,5 +1,7 @@
 ## Triple Whammy
 
+(46 solves)
+
 Fun web challenge with XSS and insecure python deserialization that sends a bot on a long journey.
 
 After an initial read-through, it seems that there are three applications running for this challenge.

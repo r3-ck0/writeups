@@ -1,5 +1,7 @@
 ## RUST
 
+(54 solves)
+
 The title fits the challenge. It simply consists of some rust reversing.
 
 Before looking at anything, we first look at the strings in the code. We install [RustCrateStringExtractor

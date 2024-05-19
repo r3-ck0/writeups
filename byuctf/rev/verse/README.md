@@ -1,5 +1,7 @@
 ## Verse
 
+(45 solves)
+
 This was an interesting challenge because for most of us `verse` is an unknown language.
 
 We get some cursed code that references the `UnrealEngine` and `Colonel`, one my teammates, knew that this is

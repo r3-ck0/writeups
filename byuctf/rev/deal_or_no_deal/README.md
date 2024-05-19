@@ -1,5 +1,7 @@
 ## Deal Or No Deal
 
+(39 solves)
+
 This was a relatively straight-forward rust rev-challenge. It contained one small gotcha.
 
 We disassemble the code in Ghidra and after running analysis and following the main-function, we find
