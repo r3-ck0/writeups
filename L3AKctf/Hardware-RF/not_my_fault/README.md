@@ -8,9 +8,9 @@ Not My Fault! was a fun challenge that revolved around stuck-at faults.
 
 Usually, when we hear about faults in the context of hardware security, we think about fault-injection techniques, such as voltage fault injection or even laser fault injection, where the unprotected chip is blasted with a laser to induce faults. These faults then generate hiccups in the program control-flow in the IC and even allow for reconstructing encryption key material, see for example [FPGAhammer](https://tches.iacr.org/index.php/TCHES/article/view/7268/6446).
 
-In VLSI design, stuck-at faults are faults that make it so that a certain net is pulled constantly to a high or low state, independently of its input. These faults can occur during manufacturing or from age. ICs can be tested against potential stuck-at-faults by providing a test-pattern to the inputs of the IC and measuring the output. As the number of possible test-patterns increases expoentially with the number of available inputs, doing an exhaustive test is often not possible. For this, automatic test-pattern generators have been divised that, given the hardware layout, find a minimum amount of test-patterns in order to test for all or at least the most crucical stuck-at faults.
+In VLSI design, stuck-at faults are faults that make it so that a certain net is pulled constantly to a high or low state, independently of its input. These faults can occur during manufacturing or from age. ICs can be tested against potential stuck-at-faults by providing a test-pattern to the inputs of the IC and measuring the output. As the number of possible test-patterns increases exponentially with the number of available inputs, doing an exhaustive test is often not possible. For this, automatic test-pattern generators have been devised that, given the hardware layout, find a minimum amount of test-patterns in order to test for all or at least the most crucical stuck-at faults.
 
-For this challenge, we are going a different route - we inject stuck-at faults.
+For this challenge, we are going a different route - we inject stuck-at faults, we are the ghost in the circuit! The code for the challenge can be found in `circuitbreaker.py`. I will go over the most relevant parts of my solution in this write-up.
 
 ## The Challenge
 
@@ -33,7 +33,7 @@ As a hardware hacker, the obvious first choice is: SHOW US THE CIRCUIT ALREADY! 
 
 We have a circuit that is composed of a cascade of gates, which are mostly two-input gates, with some smaller blocks that later turn out to be single-input gates in between (See for example net 12).
 However, it looks like we are not told what the gates are. After digging through the source code for a while, it turns out that the gates are randomly chosen from `AND`, `NAND`, `OR`, `NOR`, `XOR` and `XNOR` gates.
-So every gate can be any one of these gates, generating a 32-input logic function with a single output. The single-input gates in between can be either inverters (INV aka. NOT-gate) or buffers (BUF). For those rusty on the truth tables,
+So every gate can be any one of these gates, generating a 32-input logic function with a single output. The single-input gates in between can be either inverters (`INV` aka. `NOT`-gate) or buffers (`BUF`). For those rusty on the truth tables,
 have a look at [this](https://tse1.mm.bing.net/th?q=logic%20gates%20cheat%20sheet) cheat-sheet. The buffers are not shown and if you are unsure what they are - think of them as a wire.
 
 My natural instinct kicks in and I have to check if the circuit is the same on every run. It turns out that it is always a 32-input-1-output logic function, however the single-input gates are randomly sprinkled in between. Because of this, we can not simply assume the circuit topology to be constant.
@@ -76,14 +76,14 @@ For the second question, we have to look at what gate we are facing. For each ga
 
 ### NOR Truth Table
 
-| x1| x2| y |
+| a| b| y |
 |---|---|---|
 | 0 | 0 | 1 |
 | 0 | 1 | 0 |
 | 1 | 0 | 0 |
 | 1 | 1 | 0 |
 
-We can see on the truth table, that if we want know the input `x1`, we can set the input `x2` to be `0`. We then see the value of `~x1` at the output `y`, so we simply have to invert `y` and know `x1`. This obviously goes for both inputs, as the basic logic functions are all symmetrical. Thus, the `tp`-function for the `NOR`-gate looks like:
+We can see on the truth table, that if we want know the input `a`, we can set the input `b` to be `0`. We then see the value of `~a` at the output `y`, so we simply have to invert `y` and know `a`. This obviously goes for both inputs, as the basic logic functions are all symmetrical. Thus, the `tp`-function for the `NOR`-gate looks like:
 
 ```python
 class NOR:
@@ -123,7 +123,11 @@ It seems that, in the naive implementation, we need 4 evaluations per gate to fi
 
 In order to circumvent this, we can do a little trick. When we look at the available 2-input gates, we can see `AND`, `NAND`, `OR`, `NOR`, `XOR` and `XNOR` gates. It is obvious that for each gate, there is also an inverted gate. This means, that we can simply prune the single-input gates out of the circuit. For example, if there was an `INV` following an `AND`, it now becomes a `NAND`. If there was a `BUF` following a `NOR`, it will simply stay a `NOR`. This allows us to always stay at exactly 156 evaluations per circuit, which is below the necessary limit. The function `prune_single_input_gates(circuit)` takes care of this in the accompanying implementation.
 
-And that's basically it! After implementing all of that in `circuitbreaker.py` and running it locally, I received my flag! I turned to the remote and... it was very slow. It took 45 minutes to complete a single run and I was greeted by a flag that looked like this: `L3AK{F4uLt_1nJ3cti0N_C4n_M4k3_4NY_C1RCuIT_iN53cu`. I had the secret chunks, so I could easily reconstruct the secret key, however I had a lot of debug output. This made it so the encrypted flag scrolled out of my terminal and I had to actually run it again. I didn't want to wait another 45 minutes, so I looked up where the server was located, rented a linode server in the same area and voila, for only 6 cent I brought down the runtime from 45 minutes to 8 minutes! Very well invested money in my books.
+# The resolution
+
+And that's basically it! After implementing all of that in `circuitbreaker.py` and running it locally, I received my flag! I turned to the remote and... it was very slow. It took 45 minutes to complete a single run and I was greeted by a flag that looked like this: `L3AK{F4uLt_1nJ3cti0N_C4n_M4k3_4NY_C1RCuIT_iN53cu`. This doesn't look right hmm? No problem though, I had the secret chunks, so I could easily reconstruct the secret key, but... I also had a lot of debug output. This made it so the encrypted flag scrolled out of my terminal and I had to actually run it again. 
+
+I didn't want to wait another 45 minutes, so I looked up where the server was located, rented a linode server in the same area and voila, for only 6 cents I brought down the runtime from 45 minutes to 8 minutes! Very well invested money in my books.
 
 It turned out, that instead of decrypting the flag using `plaintext = cipher.decrypt(bytes.fromhex(encflag))`, it was necessary to also `unpad` it, as so: `plaintext = unpad(cipher.decrypt(bytes.fromhex(encflag)), AES.block_size)`.
 
