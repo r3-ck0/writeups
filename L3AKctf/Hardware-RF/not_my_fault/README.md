@@ -6,7 +6,7 @@
 
 Not My Fault! was a fun challenge that revolved around stuck-at faults.
 
-Usually, when we hear about faults in the context of hardware security, we think about fault-injection techniques, such as voltage fault injection or even laser fault injection, where the unprotected chip is blasted with a laser to induce faults. These faults then generate hiccups in the program control-flow in the IC and even allow for reconstructing encryption key material, see for example (FPGAhammer)[https://tches.iacr.org/index.php/TCHES/article/view/7268/6446].
+Usually, when we hear about faults in the context of hardware security, we think about fault-injection techniques, such as voltage fault injection or even laser fault injection, where the unprotected chip is blasted with a laser to induce faults. These faults then generate hiccups in the program control-flow in the IC and even allow for reconstructing encryption key material, see for example [FPGAhammer](https://tches.iacr.org/index.php/TCHES/article/view/7268/6446).
 
 In VLSI design, stuck-at faults are faults that make it so that a certain net is pulled constantly to a high or low state, independently of its input. These faults can occur during manufacturing or from age. ICs can be tested against potential stuck-at-faults by providing a test-pattern to the inputs of the IC and measuring the output. As the number of possible test-patterns increases expoentially with the number of available inputs, doing an exhaustive test is often not possible. For this, automatic test-pattern generators have been divised that, given the hardware layout, find a minimum amount of test-patterns in order to test for all or at least the most crucical stuck-at faults.
 
@@ -34,7 +34,7 @@ As a hardware hacker, the obvious first choice is: SHOW US THE CIRCUIT ALREADY! 
 We have a circuit that is composed of a cascade of gates, which are mostly two-input gates, with some smaller blocks that later turn out to be single-input gates in between (See for example net 12).
 However, it looks like we are not told what the gates are. After digging through the source code for a while, it turns out that the gates are randomly chosen from `AND`, `NAND`, `OR`, `NOR`, `XOR` and `XNOR` gates.
 So every gate can be any one of these gates, generating a 32-input logic function with a single output. The single-input gates in between can be either inverters (INV aka. NOT-gate) or buffers (BUF). For those rusty on the truth tables,
-have a look at (this)[https://tse1.mm.bing.net/th?q=logic%20gates%20cheat%20sheet] cheat-sheet. The buffers are not shown and if you are unsure what they are - think of them as a wire.
+have a look at [this](https://tse1.mm.bing.net/th?q=logic%20gates%20cheat%20sheet) cheat-sheet. The buffers are not shown and if you are unsure what they are - think of them as a wire.
 
 My natural instinct kicks in and I have to check if the circuit is the same on every run. It turns out that it is always a 32-input-1-output logic function, however the single-input gates are randomly sprinkled in between. Because of this, we can not simply assume the circuit topology to be constant.
 
