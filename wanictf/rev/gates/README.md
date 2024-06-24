@@ -6,6 +6,21 @@ This was a simple crack-me that, when executed, took some input, and if the inpu
 
 ### Solution
 The structure of the crackme lent itself well to trying to crack it using angr, so this is what I tried. We could, just as well, have provided the input variable to `stdin`, however I wanted to spare angr from having to do some of the work that was obvious to reverse engineer, so implemented that in the initial state myself.
+After discussing the solution with `mohammed`, it turns out that changing:
+
+```python
+s = p.factory.entry_state(addr=0x1010bc)
+```
+
+to
+
+```python
+s = p.factory.entry_state(addr=0x1010bc, add_options=angr.options.unicorn)
+```
+
+Decreases the runtime down to 1:30m (From 25:00m !!). So always use angr.options.unicorn when possible.
+
+
 The following is the jupyter notebook I used to solve it:
 
 
