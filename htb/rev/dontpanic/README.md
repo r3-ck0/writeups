@@ -23,7 +23,6 @@ def getAddress(offset):
     return currentProgram.getAddressFactory().getDefaultAddressSpace().getAddress(offset)
 
 start_addr = 0x10912d
-delta = 0x139 - 0x12d
 
 listing = getState().getCurrentProgram().getListing()
 
