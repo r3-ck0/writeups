@@ -40,16 +40,10 @@ for instruction in instructions:
         target = (int(str(instruction).split("RSP + ")[1].split("]")[0], 16) - 16) // 8
         reg = str(instruction).split(",")[1]
 
-        # result[target] = 
         result[target] = chr(int(str(getInstructionAt(getAddress(state[reg] + 1))).split(",")[1],16))
 
         print(result[target], end="")
     
-
-
-# for i in range(35):
-#     getState().setCurrentAddress(getAddress(start_addr + (i * delta)))
-#     sleep(2)
 ```
 
     HTB{d0nt_p4n1c_justc4tch_the_3rror}
