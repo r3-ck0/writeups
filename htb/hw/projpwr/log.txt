@@ -1,0 +1,3 @@
+[[Tue Jul 16 20:49:42 CEST 2024]]: Initialized box self/hw/cpa
+[[Tue Jul 16 20:55:22 CEST 2024]]: Added /home/kali/Downloads/Project Power.zip to loot.
+[[Tue Jul 16 22:11:56 CEST 2024]]: Added /home/kali/Downloads/rhme2-pieceofscake-firstroundsboxes.tar.bz2 to loot.
