@@ -6,7 +6,10 @@ Knowing the weakness of custom square-and-multiply implementations, we assume th
 
 We see a distinct repetitive pattern in the data when plotting it. Local maxima are a good starting point if we want to retrieve timing information. We ignore the 5 "humps" as they seem to represent a different kind of computation than what we are interested in.
 
-In the following plot, the points of interests are marked in blue. We simply compute the difference in samples to the next local maximum to find the "runtime" of a single computation and find that there are distinct timings, 84 samples and 100 samples. We assume 84 samples = 0 while 100 samples = 1. Later we find that it is not as exact as we wish it to be and we set the threshold at 95. All the differences <= 95 are counted as a 0, everything above is a 1.
+In the following plot, the points of interests are marked in blue. We simply compute the difference in samples to the next local maximum to find the "runtime" of a single computation, which look like this:
+```[84, 84, 84, 84, 100, 100, 80, 84, 84, 84, 100, 100, 100, 96, 92, 84, 100, 100, 84, 84, 96, 84, 84, 100, 84, 100, 100, 80, 100, 84, 100, 84, 100, 100, 96, 108, 100, 100, 84, 84, 100, 96, 92, 84, 84, 100, 84, 100, 96, 100, 100, 84, 100, 100, 100, 96, 108, 100, 84, 84, 100, 84, 96, 108, 84, 84, 84, 100, 100, 96, 108, 84, 100, 84, 100, 100, 96, 108, 84, 84, 100, 84, 100, 96, 92, 100, 100, 100, 84, 100, 96, 92, 84, 100, 84, 100, 100, 96, 108, 84, 84, 100, 84, 100, 96, 92, 100, 100, 100, 84, 100, 96, 108, 100, 100, 84, 84, 100, 96, 92, 84, 100, 84, 100, 100, 80, 100, 100, 84, 84, 100, 84, 96, 84, 84, 84, 84, 100, 84, 96, 100, 84, 84, 84, 84, 84, 96, 108, 100, 100, 100, 100, 84, 96, 100, 100, 84, 84, 100, 84, 96, 108, 84, 100, 84, 100, 100, 96, 108, 100, 84, 84, 84, 100, 96, 106, 100, 84, 100, 84, 100, 96, 108, 100, 84, 84, 100, 100, 96, 108, 84, 100, 100, 100, 100, 96]```
+
+We find that there are distinct timings, 84 samples and 100 samples. We assume 84 samples = 0 while 100 samples = 1. Later we find that it is not as exact as we wish it to be and we set the threshold at 95. All the differences <= 95 are counted as a 0, everything above is a 1.
 ![Marked points of interest](marked_local_maxima.png)
 
 We retrieve the following array:
