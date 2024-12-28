@@ -30,15 +30,11 @@ with open(f'test.npy', 'wb') as f:
     np.save(f, results)
 ```
 
-I started by retrieving the first byte and the traces that corresponded to them. Another little script was used to analyze the data, which can be seen at the bottom. This script grew as I solved the challenge. The first thing I did was to look at an animation showing the plots of the traces in succession. This revealed that there was one character that had a distinct trace compared to the others. I then went on to compute the differences between the traces and the mean-trace. This was even more revealing - most traces were pretty much identical but one. So all I needed to do was to extract the mean-difference-trace with the highest variance. Below, the mean-difference-trace for r (a wrong guess) and s (the correct guess) as the first character can be seen. Iteratively doing this, revealed the key that could be used to get the actual flag.
+I started by retrieving the first byte and the traces that corresponded to them. Another little script was used to analyze the data, which can be seen at the bottom. This script grew as I solved the challenge. The first thing I did was to look at an animation showing the plots of the traces in succession. This revealed that there was one character that had a distinct trace compared to the others. I then went on to compute the differences between the traces and the mean-trace. This was even more revealing - most traces were pretty much identical but one. So all I needed to do was to extract the mean-difference-trace with the highest variance. Below, all the mean-difference-traces can be seen, where the one for the first character `s` clearly stands out. Iteratively doing this, revealed the key that could be used to get the actual flag.
 
-![Mean diff trace for r](mean-diff-trace_r.png)
+![Mean diff traces](mean-diff-traces.png)
 
-*mean-difference-trace for first character r (incorrect guess)*
-
-![Mean diff trace for s](mean-diff-trace_s.png)
-
-*mean-difference-trace for first character s (correct guess)*
+*Grid of mean-difference-trace for each first character. The correct guess was `s`.*
 
 
 ```py
